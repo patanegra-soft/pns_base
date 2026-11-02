@@ -61,7 +61,7 @@ Patanegra Soft Suite starts where its AI can run. Odoo 13 has no OWL, which the 
 | Where you are | What runs |
 | :--- | :--- |
 | `main` (multi-version tree) | `python -m pytest unit_tests`, with no Odoo. |
-| A flat branch (`14.0`, `19.0`) | Nothing to run: Base has no Odoo tests. Its tests are the unit tests on `main`. |
+| A flat branch (`14.0`, `19.0`) | The Odoo test in `tests/`: the web client starts with Base's JavaScript and no error. It needs Chrome; without it Odoo skips it. The unit tests live on `main`. |
 
 ## License, marks, training
 

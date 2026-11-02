@@ -1,12 +1,18 @@
 # Written by publish.sh: ["14.0", "19.0"] is the list of series in publish.conf.
 # Unit tests without Odoo, then the module installed with its Odoo tests
 # on a clean, official Odoo image of each series.
+# Run workflow with a series (18.0) tries one that is not published yet.
 name: Tests
 
 on:
   push:
     branches: [main]
   workflow_dispatch:
+    inputs:
+      series:
+        description: "One Odoo series to try, e.g. 18.0. Empty: the series in publish.conf."
+        required: false
+        default: ""
 
 defaults:
   run:
@@ -35,7 +41,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        series: ["14.0", "19.0"]
+        series: ${{ fromJSON(inputs.series && format('["{0}"]', inputs.series) || '["14.0", "19.0"]') }}
     services:
       db:
         image: postgres:15
@@ -66,6 +72,24 @@ jobs:
           core="$(dirname "$(dirname "$base")")"
           echo "Odoo addons: $core"
           echo "CORE=$core" >> "$GITHUB_ENV"
+
+      - name: Chrome for the browser tests
+        run: |
+          # Odoo only runs a module's JavaScript in a browser. Before 16 the
+          # image is too old for the current Chrome: those tests are skipped.
+          if ! grep -rqsE 'browser_js|start_tour' "/tmp/addons/$MODULE/tests"; then
+            echo "No browser tests."
+            exit 0
+          fi
+          series="${{ matrix.series }}"
+          if [ "${series%%.*}" -lt 16 ]; then
+            echo "::warning::Odoo ${series}: no Chrome here, the browser tests are skipped"
+            exit 0
+          fi
+          curl -fsSLo /tmp/chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+          apt-get update -qq
+          apt-get install -y -qq /tmp/chrome.deb >/dev/null
+          google-chrome --version
 
       - name: Dependencies missing from a clean Odoo
         run: |
@@ -116,6 +140,11 @@ jobs:
           fi
           if [ -d "/tmp/addons/$MODULE/tests" ] && [ "$ran" -eq 0 ]; then
             echo "::error::Odoo ${{ matrix.series }}: the module has tests/ but none ran"
+            exit 1
+          fi
+          series="${{ matrix.series }}"
+          if [ "${series%%.*}" -ge 16 ] && grep -qi 'chrome browser not found' /tmp/odoo.log; then
+            echo "::error::Odoo ${series}: Chrome was installed but the browser tests were skipped"
             exit 1
           fi
           echo "::notice::Odoo ${{ matrix.series }}: ${MODULE} installed, ${ran} Odoo tests passed"

@@ -1,0 +1,5 @@
+# Unit tests without Odoo (unit_tests/): publish.sh and the GitHub CI
+# install only this into an empty venv.
+pytest>=7.0,<9
+Pillow
+pypdf

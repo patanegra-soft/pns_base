@@ -5,7 +5,8 @@
 
 {
     'name': 'PNS Base',
-    'version': '1.2.63',
+    'version': '19.0.1.2.63',
+    'images': ['static/description/banner.png'],
     'category': 'Technical',
     'summary': 'PNS ecosystem base layer: single-branch view compatibility and cross-version Odoo utilities (14.0 and later)',
     'description': """
@@ -47,7 +48,7 @@
         Other pns_* modules declare it in 'depends' and reuse these pieces.
     """,
     'author': 'PATANEGRA Soft',
-    'website': '/pns_base/static/description/index.html',
+    'website': 'https://github.com/patanegra-soft/pns_base',
     # Apache License 2.0 — see LICENSE file
     'license': 'Other OSI approved licence',
     'depends': ['web', 'mail'],

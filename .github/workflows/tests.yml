@@ -104,9 +104,18 @@ jobs:
                 if [ -d "$CORE/$dep" ] || [ -d "/tmp/addons/$dep" ]; then continue; fi
                 url="https://codeload.github.com/${GITHUB_REPOSITORY_OWNER}/${dep}/tar.gz/refs/heads/${{ matrix.series }}"
                 echo "Fetching ${dep} ${{ matrix.series }}"
-                mkdir -p "/tmp/addons/$dep"
-                if ! curl -fsSL "$url" | tar -xz -C "/tmp/addons/$dep" --strip-components=1; then
+                got="$(mktemp -d)"
+                if ! curl -fsSL "$url" | tar -xz -C "$got" --strip-components=1; then
                   echo "::error::${dep} is not in Odoo ${{ matrix.series }} nor at ${url}"
+                  exit 1
+                fi
+                # The flat branch holds <dep>/ at its root (older ones: the module itself).
+                if [ -f "$got/$dep/__manifest__.py" ]; then
+                  mv "$got/$dep" "/tmp/addons/$dep"
+                elif [ -f "$got/__manifest__.py" ]; then
+                  mv "$got" "/tmp/addons/$dep"
+                else
+                  echo "::error::no ${dep}/__manifest__.py at ${url}"
                   exit 1
                 fi
                 next="$next $dep"
@@ -114,9 +123,19 @@ jobs:
             done
             queue="$next"
           done
+          command -v pip3 >/dev/null || { apt-get update -qq && apt-get install -y -qq python3-pip >/dev/null; }
           for req in /tmp/addons/*/requirements.txt; do
             [ -f "$req" ] || continue
             pip3 install -q -r "$req" || pip3 install -q --break-system-packages -r "$req"
+          done
+          # Odoo refuses a module whose external_dependencies do not import.
+          for manifest in /tmp/addons/*/__manifest__.py; do
+            pkgs="$(python3 -c "import ast, sys; print(' '.join(ast.literal_eval(open(sys.argv[1]).read()).get('external_dependencies', {}).get('python', [])))" "$manifest")"
+            for pkg in $pkgs; do
+              python3 -c "import $pkg" 2>/dev/null && continue
+              echo "Installing $pkg"
+              pip3 install -q "$pkg" || pip3 install -q --break-system-packages "$pkg"
+            done
           done
 
       - name: Install and run the Odoo tests

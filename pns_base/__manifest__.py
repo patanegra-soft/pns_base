@@ -5,8 +5,8 @@
 
 {
     'name': 'PNS Base',
-    'version': '19.0.1.2.64',
-    'images': ['static/description/banner.png'],
+    'version': '19.0.1.2.65',
+    'images': ['static/description/banner_store.png'],
     'category': 'Technical',
     'summary': 'PNS ecosystem base layer: single-branch view compatibility and cross-version Odoo utilities (14.0 and later)',
     'description': """

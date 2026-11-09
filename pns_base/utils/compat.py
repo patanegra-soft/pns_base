@@ -7,6 +7,8 @@ Generic suite helpers only. Module-specific names (own groups, assets)
 stay in that module and import from here when needed.
 """
 
+import base64
+
 import odoo
 
 # Odoo major version (int).
@@ -14,6 +16,12 @@ ODOO_VERSION = odoo.release.version_info[0]
 
 # Odoo 19+ renamed route type='json' to type='jsonrpc'.
 JSON_ROUTE_TYPE = 'jsonrpc' if ODOO_VERSION >= 19 else 'json'
+
+# Odoo 20+ split odoo.http into a package; content_disposition lives in its stream module.
+if ODOO_VERSION >= 20:
+    from odoo.http.stream import content_disposition  # noqa: F401
+else:
+    from odoo.http import content_disposition  # noqa: F401
 
 # Odoo 16+ merged HttpRequest and JsonRequest into Request, so the
 # Root.get_request patch is only needed up to 15.
@@ -27,8 +35,23 @@ USER_ALL_GROUPS_FIELD = 'all_group_ids' if ODOO_VERSION >= 19 else 'groups_id'
 GROUP_CATEGORY_FIELD = 'privilege_id' if ODOO_VERSION >= 19 else 'category_id'
 GROUP_USERS_FIELD = 'user_ids' if ODOO_VERSION >= 19 else 'users'
 
-# Odoo 17+: invalidate_cache() → invalidate_recordset().
-_USE_INVALIDATE_RECORDSET = ODOO_VERSION >= 17
+# Odoo 16+: invalidate_cache() → invalidate_recordset().
+_USE_INVALIDATE_RECORDSET = ODOO_VERSION >= 16
+
+
+def binary_bytes(value):
+    """Raw bytes of a Binary field read on a record (b'' when empty).
+
+    Up to 19 the field reads as base64. Odoo 20+ reads it as a BinaryValue
+    that already holds the bytes. Attachments: ``raw`` holds the bytes in
+    every series (``datas`` is gone in 20); read it with ``bytes(att.raw or b'')``.
+    """
+    if not value:
+        return b''
+    if ODOO_VERSION >= 20:
+        return bytes(value)
+    return base64.b64decode(value)
+
 
 # Separator between login and name in import reports (per-language convention).
 _LOCALE_SEMICOLON_LANGS = ('es', 'de', 'fr', 'it', 'pt', 'ca', 'gl', 'eu')

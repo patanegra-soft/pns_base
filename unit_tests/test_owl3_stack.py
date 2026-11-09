@@ -8,9 +8,20 @@ import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-MODULE = ROOT.name
+# The module name is the folder inside stacks/owl2, not the clone's folder:
+# publish.sh runs these tests on a copy of the tree under another name.
+MODULE = next(
+    p.name for p in sorted((ROOT / 'stacks' / 'owl2').iterdir())
+    if p.is_dir() and (p / '__manifest__.py').is_file()
+)
 OWL2 = ROOT / 'stacks' / 'owl2' / MODULE
 OWL3 = ROOT / 'stacks' / 'owl3' / MODULE
+
+
+def test_both_stacks_exist():
+    # Without this, a wrong path makes every other test here pass on empty sets.
+    assert (OWL2 / '__manifest__.py').is_file()
+    assert (OWL3 / '__manifest__.py').is_file()
 
 
 def _files(base):

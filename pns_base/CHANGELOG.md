@@ -2,6 +2,10 @@
 
 What changes for people who use this module, one section per published version, newest first. The heading is the git tag.
 
+## owl1-1.2.69_owl2-1.2.83_owl3-1.2.83 (2026-11-09)
+
+- Banners (Apps store, README and site) show the seven supported series, 14.0 to 20.0; the old ones still said 14 and 19. Images only.
+
 ## owl1-1.2.68_owl2-1.2.82_owl3-1.2.82 (2026-11-09)
 
 - Seven tested series, each with its flat branch: 14.0 and 15.0 (owl1), 16.0 to 19.0 (owl2) and 20.0 (owl3, a new stack written for Owl 3).

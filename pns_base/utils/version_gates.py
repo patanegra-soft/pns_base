@@ -8,11 +8,15 @@ No Odoo import: unit tests load this file as-is. Thresholds:
 - 17+: attrs → invisible/readonly/required expressions
 - 18+: <tree> → <list>, view_mode tree→list
 - 19+: res.groups category_id → privilege_id
+- 20+: ir.model.access + ir.rule → ir.access
+- 20+: ir.config_parameter get_param/set_param → get_str/set_str
 """
 
 ATTRS_CONVERT_FROM = 17
 TREE_TO_LIST_FROM = 18
 GROUP_PRIVILEGE_FROM = 19
+ACCESS_MERGE_FROM = 20
+TYPED_PARAMS_FROM = 20
 
 
 def applies_attrs_convert(odoo_version):
@@ -28,6 +32,16 @@ def applies_tree_to_list(odoo_version):
 def applies_group_privilege(odoo_version):
     """True when res.groups uses privilege_id (Odoo 19+)."""
     return odoo_version >= GROUP_PRIVILEGE_FROM
+
+
+def applies_access_merge(odoo_version):
+    """True when Odoo has ir.access instead of ir.model.access and ir.rule (Odoo 20+)."""
+    return odoo_version >= ACCESS_MERGE_FROM
+
+
+def applies_typed_params(odoo_version):
+    """True when ir.config_parameter only has typed getters and setters (Odoo 20+)."""
+    return odoo_version >= TYPED_PARAMS_FROM
 
 
 def apply_group_users_alias(vals, fields):

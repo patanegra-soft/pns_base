@@ -7,7 +7,7 @@
 
 import { FormController } from "@web/views/form/form_controller";
 import { Record } from "@web/model/relational_model/record";
-import { patch } from "@web/core/utils/patch";
+import { pnsPatch } from "@pns_base/js/pns_patch";
 import { _t } from "@web/core/l10n/translation";
 
 function uniqueNames(names) {
@@ -76,7 +76,7 @@ function archHasPnsClass(arch) {
     return String(attrs.class || "").split(/\s+/).includes("o_pns_view");
 }
 
-patch(FormController.prototype, {
+pnsPatch(FormController.prototype, "pns_base.pns_invalid_fields_dedupe", {
     setup() {
         super.setup(...arguments);
         this.model._pnsOwnedView = archHasPnsClass(this.props && this.props.arch);
@@ -94,7 +94,7 @@ patch(FormController.prototype, {
     },
 });
 
-patch(Record.prototype, {
+pnsPatch(Record.prototype, "pns_base.pns_invalid_fields_dedupe", {
     /**
      * Name the empty required fields. Format errors keep the core toast.
      */

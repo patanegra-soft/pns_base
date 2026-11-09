@@ -5,7 +5,7 @@
 
 {
     'name': 'PNS Base',
-    'version': '19.0.1.2.65',
+    'version': '19.0.1.2.82',
     'images': ['static/description/banner_store.png'],
     'category': 'Technical',
     'summary': 'PNS ecosystem base layer: single-branch view compatibility and cross-version Odoo utilities (14.0 and later)',
@@ -17,6 +17,12 @@
           XML source is always written in legacy syntax (attrs, <tree>,
           category_id). On 17+ attrs become expressions; on 18+ <tree> becomes
           <list>; on 19+ group category_id becomes privilege_id.
+        - Single-branch security (models/ir_access_legacy.py): on 20+, which
+          only has ir.access, ir.model.access.csv and ir.rule records are kept
+          and turned into the ir.access rows that give the same access.
+        - System parameters (models/ir_config_parameter_compat.py): on 20+,
+          which only has get_str/set_str and friends, get_param and set_param
+          answer as before.
         - Cross-version Odoo compatibility utilities (utils/compat.py):
           active version, res.users group helpers, cache invalidation, etc.
         - PDF and picture files on bytes (utils/pdf_io.py): open, write and turn
@@ -44,6 +50,9 @@
           the host opens it with what it has; a larger copy replaces it.
         - List many2one that keeps the row in the breadcrumb (widget
           pns_row_link): opens this row's form, then the linked record.
+        - Font Awesome icons on Odoo 20, which dropped its stylesheet
+          (static/src/css/pns_fa_compat.css): fa-* in screens and views
+          draw as in 14-19.
 
         Other pns_* modules declare it in 'depends' and reuse these pieces.
     """,
@@ -54,6 +63,10 @@
     'depends': ['web', 'mail'],
     'assets': {
         'web.assets_backend': [
+            'pns_base/static/src/js/pns_web_paths.js',
+            'pns_base/static/src/js/pns_patch.js',
+            'pns_base/static/src/css/pns_fa_compat.css',
+            'pns_base/static/src/js/pns_fa_compat.js',
             'pns_base/static/src/css/pns_required_readonly.css',
             'pns_base/static/src/css/pns_import_preview.css',
             'pns_base/static/src/css/pns_module_index.css',
@@ -65,6 +78,8 @@
             'pns_base/static/src/js/pns_module_index.js',
             'pns_base/static/src/js/pns_row_link.js',
             'pns_base/static/src/xml/pns_row_link.xml',
+            'pns_base/static/src/js/pns_list_gear.js',
+            'pns_base/static/src/xml/pns_list_gear.xml',
             'pns_base/static/src/js/pns_progress_dialog.js',
             'pns_base/static/src/xml/pns_progress_dialog.xml',
         ],

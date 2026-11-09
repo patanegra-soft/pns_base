@@ -7,6 +7,8 @@ from . import ir_attachment
 from . import ir_module_module
 from . import ir_ui_view_patch
 from . import ir_groups_patch
+from . import ir_access_legacy
+from . import ir_config_parameter_compat
 from . import operation_report_wizard
 from . import export_file_wizard
 from . import export_secrets_wizard

@@ -3,9 +3,6 @@
 # Copyright (C) 2025-2026 Patanegra Soft <https://patanegra.com>
 """Mixin for wizards that show a bulk-operation result."""
 
-import ast
-import json
-
 from lxml import etree
 
 from odoo import api, fields, models, _
@@ -15,6 +12,14 @@ from odoo.tools import html_sanitize
 from odoo.addons.pns_base.utils import ui_feedback as pns_ui
 
 _PREVIEW_SAVEPOINT = 'pns_import_preview'
+
+# The web client (17+) sends get_views only ``lang`` and ``*_view_ref``, and
+# caches the view by them: the screen to show travels as ``form_view_ref``.
+# Both views sit on the abstract mixin, so get_view strips the ref and pastes
+# their arch over the wizard's own form.
+_PREVIEW_VIEW = 'pns_base.view_pns_import_preview_form'
+_RESULT_VIEW = 'pns_base.view_pns_operation_result_form'
+_SCREEN_VIEWS = (_PREVIEW_VIEW, _RESULT_VIEW)
 
 
 class PnsOperationReportWizard(models.AbstractModel):
@@ -222,9 +227,8 @@ class PnsOperationReportWizard(models.AbstractModel):
 
     def _window_context(self, extra=None):
         ctx = dict(self.env.context)
-        # False must be set: a missing key loses to the parent True.
-        ctx['pns_import_preview'] = False
-        ctx['pns_operation_result'] = False
+        # False must be set: a missing key loses to the parent's screen.
+        ctx['form_view_ref'] = False
         if extra:
             ctx.update(extra)
         return ctx
@@ -239,7 +243,7 @@ class PnsOperationReportWizard(models.AbstractModel):
             'view_mode': 'form',
             'views': [[False, 'form']],
             'target': 'new',
-            'context': self._window_context({'pns_operation_result': True}),
+            'context': self._window_context({'form_view_ref': _RESULT_VIEW}),
         }
 
     def _reopen_operation_wizard(self, title=None):
@@ -265,7 +269,7 @@ class PnsOperationReportWizard(models.AbstractModel):
             'view_mode': 'form',
             'views': [[False, 'form']],
             'target': 'new',
-            'context': self._window_context({'pns_import_preview': True}),
+            'context': self._window_context({'form_view_ref': _PREVIEW_VIEW}),
         }
 
     def _preview_snapshot(self):
@@ -310,7 +314,7 @@ class PnsOperationReportWizard(models.AbstractModel):
         cr = self.env.cr
         cr.execute('SAVEPOINT %s' % _PREVIEW_SAVEPOINT)
         try:
-            self.with_context(pns_import_preview=False).action_import()
+            self.with_context(form_view_ref=False).action_import()
             snap = self._preview_snapshot()
         except Exception:
             cr.execute('ROLLBACK TO SAVEPOINT %s' % _PREVIEW_SAVEPOINT)
@@ -322,43 +326,19 @@ class PnsOperationReportWizard(models.AbstractModel):
         self._invalidate_after_preview_rollback()
         return self._apply_import_preview(**snap)
 
-    def _stamp_view_modifiers(self, node):
-        """Hide attrs when the preview arch is injected, not loaded as a view."""
-        for el in node.iter():
-            mods = {}
-            raw = el.get('attrs')
-            if raw:
-                try:
-                    parsed = ast.literal_eval(raw)
-                except (ValueError, SyntaxError):
-                    parsed = None
-                if isinstance(parsed, dict):
-                    mods.update(parsed)
-            if el.get('invisible') in ('1', 'True', 'true'):
-                mods['invisible'] = True
-            if el.get('readonly') in ('1', 'True', 'true'):
-                mods['readonly'] = True
-            if mods:
-                el.set('modifiers', json.dumps(mods))
-
-    def _prepare_import_preview_arch(self, arch):
+    def _inject_screen_arch(self, result, xmlid):
+        """The screen's arch in place of the wizard's form, postprocessed for
+        this model, with the fields it shows (the client loads only those)."""
+        src = self.env.ref(xmlid)
+        arch = src.arch
         View = self.env['ir.ui.view']
         if hasattr(View, '_auto_convert_attrs'):
             arch = View._auto_convert_attrs(arch)
-        node = etree.fromstring(arch)
-        self._stamp_view_modifiers(node)
-        return etree.tostring(node, encoding='unicode')
-
-    def _inject_import_preview_arch(self, result):
-        src = self.env.ref('pns_base.view_pns_import_preview_form')
+        arch, fields_by_model = src.postprocess_and_fields(etree.fromstring(arch), model=self._name)
+        fields_by_model = self._get_view_fields('form', fields_by_model)
         result = dict(result)
-        result['arch'] = self._prepare_import_preview_arch(src.arch)
-        return result
-
-    def _inject_operation_result_arch(self, result):
-        src = self.env.ref('pns_base.view_pns_operation_result_form')
-        result = dict(result)
-        result['arch'] = self._prepare_import_preview_arch(src.arch)
+        result['arch'] = arch
+        result['models'] = {model: tuple(names) for model, names in fields_by_model.items()}
         return result
 
     def _stamp_review_button(self, arch):
@@ -372,12 +352,12 @@ class PnsOperationReportWizard(models.AbstractModel):
         return etree.tostring(node, encoding='unicode')
 
     def get_view(self, view_id=None, view_type='form', **options):
-        if view_type == 'form' and self.env.context.get('pns_import_preview'):
-            result = super().get_view(view_id=None, view_type='form', **options)
-            return self._inject_import_preview_arch(result)
-        if view_type == 'form' and self.env.context.get('pns_operation_result'):
-            result = super().get_view(view_id=None, view_type='form', **options)
-            return self._inject_operation_result_arch(result)
+        screen = self.env.context.get('form_view_ref')
+        if view_type == 'form' and screen in _SCREEN_VIEWS:
+            plain = self.with_context(form_view_ref=False)
+            result = super(PnsOperationReportWizard, plain).get_view(
+                view_id=None, view_type='form', **options)
+            return self._inject_screen_arch(result, screen)
         result = super().get_view(view_id=view_id, view_type=view_type, **options)
         if view_type == 'form':
             result = dict(result)

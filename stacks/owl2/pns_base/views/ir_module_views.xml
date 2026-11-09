@@ -11,7 +11,7 @@
             <xpath expr="//field[@name='description_html']" position="replace">
                 <field name="description_html" invisible="1"/>
                 <field name="pns_index_url" nolabel="1" widget="pns_module_index"
-                       invisible="not pns_index_url"/>
+                       attrs="{'invisible': [('pns_index_url', '=', False)]}"/>
             </xpath>
         </field>
     </record>

@@ -26,6 +26,18 @@ def test_thresholds():
     assert gates.ATTRS_CONVERT_FROM == 17
     assert gates.TREE_TO_LIST_FROM == 18
     assert gates.GROUP_PRIVILEGE_FROM == 19
+    assert gates.ACCESS_MERGE_FROM == 20
+
+
+def test_access_merge_only_on_20():
+    assert not gates.applies_access_merge(19)
+    assert gates.applies_access_merge(20)
+
+
+def test_typed_params_only_on_20():
+    assert gates.TYPED_PARAMS_FROM == 20
+    assert not gates.applies_typed_params(19)
+    assert gates.applies_typed_params(20)
 
 
 def test_tree_to_list_starts_at_18():

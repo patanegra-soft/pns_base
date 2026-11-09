@@ -75,6 +75,20 @@ def test_translation_dedupe_only_drops_pns_modules():
     assert 'if ours(row[_IDX_MODULE]) and ours(prev[_IDX_MODULE])' in src
 
 
+def test_review_and_result_screens_reach_the_server():
+    # O14 gets the whole context in fields_view_get.
+    owl1 = _src('owl1', 'models', 'operation_report_wizard.py')
+    assert "ctx['pns_import_preview'] = False" in owl1
+    assert "ctx['pns_operation_result'] = False" in owl1
+    # 17+ send get_views only lang and *_view_ref: the screen rides form_view_ref.
+    owl2 = _src('owl2', 'models', 'operation_report_wizard.py')
+    assert "ctx['form_view_ref'] = False" in owl2
+    assert "{'form_view_ref': _PREVIEW_VIEW}" in owl2
+    assert "{'form_view_ref': _RESULT_VIEW}" in owl2
+    assert 'pns_import_preview=' not in owl2
+    assert "'pns_operation_result'" not in owl2
+
+
 def test_import_preview_lives_on_the_mixin():
     for stack in ('owl1', 'owl2'):
         src = _src(stack, 'models', 'operation_report_wizard.py')
@@ -83,7 +97,6 @@ def test_import_preview_lives_on_the_mixin():
         assert 'SAVEPOINT' in src
         assert 'ROLLBACK TO SAVEPOINT' in src
         assert 'def _apply_import_preview' in src
-        assert 'pns_import_preview' in src
         views = _src(stack, 'views', 'operation_report_wizard_views.xml')
         assert 'view_pns_import_preview_form' in views
         assert 'name="action_import"' in views
@@ -98,9 +111,6 @@ def test_import_preview_lives_on_the_mixin():
         assert 'name="result_status"' not in views.split('view_pns_import_preview_form', 1)[1]
         assert 'o_pns_preview_card' not in views
         assert 'def _preview_param_text' in src
-        assert "ctx['pns_import_preview'] = False" in src
-        assert "ctx['pns_operation_result'] = False" in src
-        assert 'def _inject_operation_result_arch' in src
         assert 'o_pns_op_result' in views
         assert 'o_pns_alert_icon' in views
         assert 'def _stamp_review_button' in src

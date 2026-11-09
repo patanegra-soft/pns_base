@@ -5,7 +5,7 @@
 
 {
     'name': 'PNS Base',
-    'version': '20.0.1.2.82',
+    'version': '20.0.1.2.83',
     'images': ['static/description/banner_store.png'],
     'category': 'Technical',
     'summary': 'PNS ecosystem base layer: single-branch view compatibility and cross-version Odoo utilities (14.0 and later)',

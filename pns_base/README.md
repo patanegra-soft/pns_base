@@ -49,10 +49,16 @@ from odoo.addons.pns_base.utils import ui_feedback as pns_ui
 
 ## Odoo versions
 
-| Series | Status |
-| :--- | :--- |
-| 14.0 – 20.0 | Tested. Flat branch published. |
-| 13.0 and older | Not supported. |
+| Series | Stack | Status | The suite on it |
+| :--- | :--- | :--- | :--- |
+| 14.0 | `owl1` | Tested. Flat branch published. | [AI for Odoo 14 Community](https://www.patanegra.com/odoo-14-ai.html) |
+| 15.0 | `owl1` | Tested. Flat branch published. | [AI for Odoo 15 Community](https://www.patanegra.com/odoo-15-ai.html) |
+| 16.0 | `owl2` | Tested. Flat branch published. | [AI for Odoo 16 Community](https://www.patanegra.com/odoo-16-ai.html) |
+| 17.0 | `owl2` | Tested. Flat branch published. | [AI for Odoo 17 Community](https://www.patanegra.com/odoo-17-ai.html) |
+| 18.0 | `owl2` | Tested. Flat branch published. | [AI for Odoo 18 Community](https://www.patanegra.com/odoo-18-ai.html) |
+| 19.0 | `owl2` | Tested. Flat branch published. | [AI for Odoo 19 Community](https://www.patanegra.com/odoo-19-ai.html) |
+| 20.0 | `owl3` | Tested. Flat branch published. | [AI for Odoo 20 Community](https://www.patanegra.com/odoo-20-ai.html) |
+| 13.0 and older | — | Not supported. | |
 
 Patanegra Soft Suite starts where its AI can run. Odoo 13 has no OWL, which the AI chat is built on. Odoo 8 to 10 run on Python 2, and Odoo 11 and 12 on Python 3.5; the AI engine needs Python 3.7. The suite keeps three stacks (`owl1` for 14.0 and 15.0, `owl2` for 16.0 to 19.0, `owl3` for 20.0 and later) and none for older series.
 

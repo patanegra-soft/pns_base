@@ -2,6 +2,11 @@
 
 What changes for people who use this module, one section per published version, newest first. The heading is the git tag.
 
+## owl1-1.2.70_owl2-1.2.84_owl3-1.2.84 (2026-11-12)
+
+- Odoo 16: the progress dialog and the record link in lists load again; their screen templates were missing there.
+- Apps page and README: each Odoo version links to its page on www.patanegra.com, and the store cover is easier to read in the grid.
+
 ## owl1-1.2.69_owl2-1.2.83_owl3-1.2.83 (2026-11-09)
 
 - Banners (Apps store, README and site) show the seven supported series, 14.0 to 20.0; the old ones still said 14 and 19. Images only.

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates xml:space="preserve">
 
-    <t t-name="pns_base.ProgressDialog">
+    <t t-name="pns_base.ProgressDialog" owl="1">
         <Dialog title="props.title" size="'md'">
             <div class="o_pns_progress">
                 <t t-if="running">

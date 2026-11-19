@@ -51,34 +51,40 @@ msgstr "La operación ha fallado."
 
 #. module: pns_base
 #: model:ir.model.fields,field_description:pns_base.field_pns_operation_report_wizard__result_created
+#: model_terms:ir.ui.view,arch_db:pns_base.view_pns_operation_result_form
 msgid "Created"
 msgstr "Creados"
 
 #. module: pns_base
 #: model:ir.model.fields,field_description:pns_base.field_pns_operation_report_wizard__result_updated
+#: model_terms:ir.ui.view,arch_db:pns_base.view_pns_operation_result_form
 msgid "Updated"
 msgstr "Actualizados"
 
 #. module: pns_base
 #: model:ir.model.fields,field_description:pns_base.field_pns_operation_report_wizard__result_skipped
+#: model_terms:ir.ui.view,arch_db:pns_base.view_pns_operation_result_form
 msgid "Skipped"
 msgstr "Omitidos"
 
 #. module: pns_base
 #: model:ir.model.fields,field_description:pns_base.field_pns_operation_report_wizard__result_removed
 #: model_terms:ir.ui.view,arch_db:pns_base.view_pns_import_preview_form
+#: model_terms:ir.ui.view,arch_db:pns_base.view_pns_operation_result_form
 msgid "Removed"
 msgstr "Eliminados"
 
 #. module: pns_base
 #: model:ir.model.fields,field_description:pns_base.field_pns_operation_report_wizard__result_linked
 #: model_terms:ir.ui.view,arch_db:pns_base.view_pns_import_preview_form
+#: model_terms:ir.ui.view,arch_db:pns_base.view_pns_operation_result_form
 msgid "Linked"
 msgstr "Vinculados"
 
 #. module: pns_base
 #: model:ir.model.fields,field_description:pns_base.field_pns_operation_report_wizard__result_manifest
 #: model_terms:ir.ui.view,arch_db:pns_base.view_pns_import_preview_form
+#: model_terms:ir.ui.view,arch_db:pns_base.view_pns_operation_result_form
 msgid "Manifest"
 msgstr "Manifiesto"
 
@@ -87,6 +93,7 @@ msgstr "Manifiesto"
 #: code:addons/pns_base/utils/ui_feedback.py:0
 #: model:ir.model.fields,field_description:pns_base.field_pns_operation_report_wizard__result_errors
 #: model_terms:ir.ui.view,arch_db:pns_base.view_pns_import_preview_form
+#: model_terms:ir.ui.view,arch_db:pns_base.view_pns_operation_result_form
 msgid "Errors"
 msgstr "Errores"
 
@@ -95,12 +102,13 @@ msgstr "Errores"
 #: code:addons/pns_base/utils/ui_feedback.py:0
 #: model:ir.model.fields,field_description:pns_base.field_pns_operation_report_wizard__result_warnings
 #: model_terms:ir.ui.view,arch_db:pns_base.view_pns_import_preview_form
+#: model_terms:ir.ui.view,arch_db:pns_base.view_pns_operation_result_form
 msgid "Warnings"
 msgstr "Advertencias"
 
 #. module: pns_base
 #: model:ir.model.fields,field_description:pns_base.field_pns_operation_report_wizard__result_detail
-#: model_terms:ir.ui.view,arch_db:pns_base.view_pns_import_preview_form
+#: model_terms:ir.ui.view,arch_db:pns_base.view_pns_operation_result_form
 msgid "Details"
 msgstr "Detalles"
 
@@ -126,8 +134,10 @@ msgstr "Index"
 
 #. module: pns_base
 #: model:ir.model.fields,help:pns_base.field_ir_module_module__pns_index_url
-msgid "Local Apps index (static/description/index.html) when the module ships one."
-msgstr "Index local de Apps (static/description/index.html) si el módulo lo trae."
+msgid ""
+"Local Apps index (static/description/index.html) when the module ships one."
+msgstr ""
+"Index local de Apps (static/description/index.html) si el módulo lo trae."
 
 #. module: pns_base
 #. odoo-javascript
@@ -145,7 +155,8 @@ msgstr "Campos obligatorios: %s"
 #. odoo-python
 #: code:addons/pns_base/utils/settings_io.py:0
 msgid "Invalid backup file: expected a settings object."
-msgstr "Archivo de copia de seguridad no válido: se esperaba un objeto de ajustes."
+msgstr ""
+"Archivo de copia de seguridad no válido: se esperaba un objeto de ajustes."
 
 #. module: pns_base
 #. odoo-python
@@ -181,7 +192,8 @@ msgstr "No se pudieron leer los campos de ajustes; no se importó nada."
 #. odoo-python
 #: code:addons/pns_base/utils/settings_io.py:0
 msgid "Could not read current settings; applying file values only."
-msgstr "No se pudieron leer los ajustes actuales; se aplican solo los del archivo."
+msgstr ""
+"No se pudieron leer los ajustes actuales; se aplican solo los del archivo."
 
 #. module: pns_base
 #: model:ir.model,name:pns_base.model_pns_export_file_wizard
@@ -315,12 +327,18 @@ msgstr "Añade al archivo exportado las claves API y los tokens en claro."
 #. module: pns_base
 #: model_terms:ir.ui.view,arch_db:pns_base.view_export_secrets_wizard_form
 msgid "The file will carry API keys and tokens in clear text. Keep it safe."
-msgstr "El archivo llevará las claves API y los tokens en claro. Guárdalo en lugar seguro."
+msgstr ""
+"El archivo llevará las claves API y los tokens en claro. Guárdalo en lugar "
+"seguro."
 
 #. module: pns_base
 #: model_terms:ir.ui.view,arch_db:pns_base.view_export_secrets_wizard_form
-msgid "Keys and tokens stay out of the file. Importing it never blanks the ones already set."
-msgstr "Las claves y los tokens se quedan fuera del archivo. Al importarlo, nunca se vacían los que ya hay."
+msgid ""
+"Keys and tokens stay out of the file. Importing it never blanks the ones "
+"already set."
+msgstr ""
+"Las claves y los tokens se quedan fuera del archivo. Al importarlo, nunca se"
+" vacían los que ya hay."
 
 #. module: pns_base
 #: model_terms:ir.ui.view,arch_db:pns_base.view_export_secrets_wizard_form
@@ -343,12 +361,13 @@ msgstr "Traducciones"
 #. odoo-python
 #: code:addons/pns_base/models/base_language_install.py:0
 msgid "%s duplicate translation rows were skipped so the language could load."
-msgstr "%s filas de traducción duplicadas se han saltado para que el idioma pueda cargarse."
+msgstr ""
+"%s filas de traducción duplicadas se han saltado para que el idioma pueda "
+"cargarse."
 
 #. module: pns_base
 #. odoo-python
 #: code:addons/pns_base/models/operation_report_wizard.py:0
-#: model_terms:ir.ui.view,arch_db:pns_base.view_pns_import_preview_form
 msgid "Review import"
 msgstr "Revisar importación"
 
@@ -433,76 +452,10 @@ msgid "Review"
 msgstr "Revisar"
 
 #. module: pns_base
-#: model_terms:ir.ui.view,arch_db:pns_base.view_pns_import_preview_form
-msgid "Nothing has been written yet."
-msgstr "Aún no se ha escrito nada."
-
-#. module: pns_base
-#: model_terms:ir.ui.view,arch_db:pns_base.view_pns_import_preview_form
-msgid "Confirm to apply this file."
-msgstr "Confirma para aplicar este archivo."
-
-#. module: pns_base
-#: model_terms:ir.ui.view,arch_db:pns_base.view_pns_import_preview_form
-msgid "New"
-msgstr "Nuevo"
-
-#. module: pns_base
-#: model_terms:ir.ui.view,arch_db:pns_base.view_pns_import_preview_form
-msgid "Overwrite"
-msgstr "Sobrescribir"
-
-#. module: pns_base
-#: model_terms:ir.ui.view,arch_db:pns_base.view_pns_import_preview_form
-msgid "Keep (already here)"
-msgstr "Conservar (ya está)"
-
-#. module: pns_base
-#: model_terms:ir.ui.view,arch_db:pns_base.view_pns_import_preview_form
-msgid "What the file will do"
-msgstr "Qué hará el archivo"
-
-#. module: pns_base
-#: model_terms:ir.ui.view,arch_db:pns_base.view_pns_import_preview_form
-msgid "Confirm import"
-msgstr "Confirmar importación"
-
-#. module: pns_base
 #. odoo-python
 #: code:addons/pns_base/models/operation_report_wizard.py:0
 msgid "This wizard has no import to review."
 msgstr "Este asistente no tiene una importación que revisar."
-
-#. module: pns_base
-#: model:ir.model.fields,field_description:pns_base.field_pns_operation_report_wizard__result_params
-#: model_terms:ir.ui.view,arch_db:pns_base.view_pns_import_preview_form
-msgid "Parameters"
-msgstr "Parámetros"
-
-#. module: pns_base
-#: model_terms:ir.ui.view,arch_db:pns_base.view_pns_import_preview_form
-msgid "Will be created."
-msgstr "Se crearán."
-
-#. module: pns_base
-#: model_terms:ir.ui.view,arch_db:pns_base.view_pns_import_preview_form
-msgid "Matching rows will be written."
-msgstr "Se escribirán las filas coincidentes."
-
-#. module: pns_base
-#: model_terms:ir.ui.view,arch_db:pns_base.view_pns_import_preview_form
-msgid "Keep"
-msgstr "Conservar"
-
-#. module: pns_base
-#: model_terms:ir.ui.view,arch_db:pns_base.view_pns_import_preview_form
-msgid "Left as they are."
-msgstr "Se dejan como están."
-
-#. module: pns_base
-#: model_terms:ir.ui.view,arch_db:pns_base.view_pns_import_preview_form
-msgid "Breakdown"
-msgstr "Desglose"
 
 #. module: pns_base
 #. odoo-python
@@ -564,8 +517,8 @@ msgstr "Resumen"
 
 #. module: pns_base
 #. odoo-javascript
-#: model:ir.model.fields,field_description:pns_base.field_pns_progress_job__error
 #: code:addons/pns_base/static/src/xml/pns_progress_dialog.xml:0
+#: model:ir.model.fields,field_description:pns_base.field_pns_progress_job__error
 msgid "Error"
 msgstr "Error"
 
@@ -591,8 +544,8 @@ msgstr "En curso"
 
 #. module: pns_base
 #. odoo-javascript
-#: model:ir.model.fields.selection,name:pns_base.selection__pns_progress_job__state__done
 #: code:addons/pns_base/static/src/xml/pns_progress_dialog.xml:0
+#: model:ir.model.fields.selection,name:pns_base.selection__pns_progress_job__state__done
 msgid "Done"
 msgstr "Hecho"
 
@@ -605,13 +558,15 @@ msgstr "Fallido"
 #. odoo-python
 #: code:addons/pns_base/models/progress_job.py:0
 msgid "The work stopped with an error. The server log has the details."
-msgstr "El trabajo se ha parado con un error. El log del servidor tiene el detalle."
+msgstr ""
+"El trabajo se ha parado con un error. El log del servidor tiene el detalle."
 
 #. module: pns_base
 #. odoo-python
 #: code:addons/pns_base/models/progress_job.py:0
 msgid "The work stopped answering. It may have been cut by a restart."
-msgstr "El trabajo ha dejado de responder. Puede que lo haya cortado un reinicio."
+msgstr ""
+"El trabajo ha dejado de responder. Puede que lo haya cortado un reinicio."
 
 #. module: pns_base
 #. odoo-python
@@ -647,10 +602,97 @@ msgstr "Información"
 #. odoo-python
 #: code:addons/pns_base/models/progress_job.py:0
 msgid "This work is already running for %s. Try again when it finishes."
-msgstr "Este trabajo ya está en curso para %s. Vuelve a intentarlo cuando termine."
+msgstr ""
+"Este trabajo ya está en curso para %s. Vuelve a intentarlo cuando termine."
 
 #. module: pns_base
 #. odoo-python
 #: code:addons/pns_base/utils/ui_feedback.py:0
 msgid "Errors (%s):"
 msgstr "Errores (%s):"
+
+#. module: pns_base
+#: model_terms:ir.ui.view,arch_db:pns_base.view_pns_operation_result_form
+msgid ""
+"<i class=\"fa fa-check-circle o_pns_alert_icon\" title=\"Operation completed successfully.\"/>\n"
+"                        <strong>Operation completed successfully.</strong>"
+msgstr ""
+"<i class=\"fa fa-check-circle o_pns_alert_icon\" title=\"Operación completada correctamente.\"/>\n"
+"                        <strong>Operación completada correctamente.</strong>"
+
+#. module: pns_base
+#: model_terms:ir.ui.view,arch_db:pns_base.view_pns_operation_result_form
+msgid ""
+"<i class=\"fa fa-exclamation-triangle o_pns_alert_icon\" title=\"Operation completed with warnings.\"/>\n"
+"                        <strong>Operation completed with warnings.</strong>"
+msgstr ""
+"<i class=\"fa fa-exclamation-triangle o_pns_alert_icon\" title=\"Operación completada con avisos.\"/>\n"
+"                        <strong>Operación completada con avisos.</strong>"
+
+#. module: pns_base
+#: model_terms:ir.ui.view,arch_db:pns_base.view_pns_operation_result_form
+msgid ""
+"<i class=\"fa fa-times-circle o_pns_alert_icon\" title=\"Operation failed.\"/>\n"
+"                        <strong>Operation failed.</strong>"
+msgstr ""
+"<i class=\"fa fa-times-circle o_pns_alert_icon\" title=\"La operación ha fallado.\"/>\n"
+"                        <strong>La operación ha fallado.</strong>"
+
+#. module: pns_base
+#: model_terms:ir.ui.view,arch_db:pns_base.view_pns_import_preview_form
+msgid "<span class=\"o_pns_preview_attr\">Errors</span>"
+msgstr "<span class=\"o_pns_preview_attr\">Errores</span>"
+
+#. module: pns_base
+#: model_terms:ir.ui.view,arch_db:pns_base.view_pns_import_preview_form
+msgid "<span class=\"o_pns_preview_attr\">Linked</span>"
+msgstr "<span class=\"o_pns_preview_attr\">Vinculados</span>"
+
+#. module: pns_base
+#: model_terms:ir.ui.view,arch_db:pns_base.view_pns_import_preview_form
+msgid "<span class=\"o_pns_preview_attr\">Manifest</span>"
+msgstr "<span class=\"o_pns_preview_attr\">Manifiesto</span>"
+
+#. module: pns_base
+#: model_terms:ir.ui.view,arch_db:pns_base.view_pns_import_preview_form
+msgid "<span class=\"o_pns_preview_attr\">Options</span>"
+msgstr "<span class=\"o_pns_preview_attr\">Opciones</span>"
+
+#. module: pns_base
+#: model_terms:ir.ui.view,arch_db:pns_base.view_pns_import_preview_form
+msgid "<span class=\"o_pns_preview_attr\">Removed</span>"
+msgstr "<span class=\"o_pns_preview_attr\">Eliminados</span>"
+
+#. module: pns_base
+#: model_terms:ir.ui.view,arch_db:pns_base.view_pns_import_preview_form
+msgid "<span class=\"o_pns_preview_attr\">Section list</span>"
+msgstr "<span class=\"o_pns_preview_attr\">Lista por sección</span>"
+
+#. module: pns_base
+#: model_terms:ir.ui.view,arch_db:pns_base.view_pns_import_preview_form
+msgid "<span class=\"o_pns_preview_attr\">Warnings</span>"
+msgstr "<span class=\"o_pns_preview_attr\">Advertencias</span>"
+
+#. module: pns_base
+#: model_terms:ir.ui.view,arch_db:pns_base.view_pns_import_preview_form
+msgid "<span class=\"o_pns_preview_attr\">Will create</span>"
+msgstr "<span class=\"o_pns_preview_attr\">Creará</span>"
+
+#. module: pns_base
+#: model_terms:ir.ui.view,arch_db:pns_base.view_pns_import_preview_form
+msgid "<span class=\"o_pns_preview_attr\">Will leave</span>"
+msgstr "<span class=\"o_pns_preview_attr\">Dejará</span>"
+
+#. module: pns_base
+#: model_terms:ir.ui.view,arch_db:pns_base.view_pns_import_preview_form
+msgid "<span class=\"o_pns_preview_attr\">Will replace</span>"
+msgstr "<span class=\"o_pns_preview_attr\">Sustituirá</span>"
+
+#. module: pns_base
+#: model_terms:ir.ui.view,arch_db:pns_base.view_pns_import_preview_form
+msgid ""
+"<strong>No data has been written.</strong>\n"
+"                    Confirm to apply the upload."
+msgstr ""
+"<strong>No se ha escrito nada.</strong>\n"
+"                    Confirma para aplicar la subida."

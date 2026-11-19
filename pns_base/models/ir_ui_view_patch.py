@@ -399,15 +399,18 @@ class IrUiView(models.Model):
         if not arch:
             return arch
 
+        from ..utils.compat import ODOO_VERSION
+        from ..utils.version_gates import applies_attrs_convert, applies_tree_to_list
+        # Odoo 16 reads attrs and cannot read the expressions.
+        if not applies_attrs_convert(ODOO_VERSION):
+            return arch
+
         # 1) attrs="{...}" -> invisible/readonly/required="expresion" (conversor general).
         if 'attrs=' in arch:
             arch = re.sub(r'''attrs=(["'])(\{.*?\})\1''', _convert_attrs_match, arch, flags=re.DOTALL)
         # 1b) inherit: <attribute name="attrs">{...}</attribute>
         if 'name="attrs"' in arch or "name='attrs'" in arch:
             arch = _ATTRS_ATTRIBUTE_TAG_RE.sub(_convert_attribute_attrs_tag, arch)
-
-        from ..utils.compat import ODOO_VERSION
-        from ..utils.version_gates import applies_tree_to_list
 
         # 2) <tree> -> <list> (O18+; on O17 the list tag is still <tree>).
         if applies_tree_to_list(ODOO_VERSION):

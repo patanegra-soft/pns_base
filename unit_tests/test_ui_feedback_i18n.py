@@ -8,7 +8,7 @@ from pathlib import Path
 import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
-CATALOGS = {'owl1': 'es.po', 'owl2': 'es_ES.po'}
+CATALOGS = {'owl1': 'es.po', 'owl2': 'es.po'}
 CODE_REF = '#: code:addons/pns_base/utils/ui_feedback.py:0'
 
 
@@ -33,7 +33,7 @@ def test_report_headings_are_translated(stack):
 
 def test_owl2_code_terms_carry_the_loader_flag():
     """Odoo 16+ only loads a code term whose entry says odoo-python / odoo-javascript."""
-    po = (ROOT / 'stacks' / 'owl2' / 'pns_base' / 'i18n' / 'es_ES.po').read_text(
+    po = (ROOT / 'stacks' / 'owl2' / 'pns_base' / 'i18n' / 'es.po').read_text(
         encoding='utf-8').replace('\r\n', '\n')
     missing = []
     for block in po.split('\n\n'):

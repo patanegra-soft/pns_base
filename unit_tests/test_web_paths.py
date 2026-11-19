@@ -27,3 +27,14 @@ def test_the_shim_requires_no_quoted_name(stack):
     # Odoo 16 must still load it as a plain script (its own marker check).
     assert not re.match(r'\s*/(\*|/).*\s*@odoo-module', text)
     assert _REQUIRE.findall(text) == []
+
+
+def test_the_rpc_shim_speaks_the_17_0_form_too():
+    """Odoo 17.0 has no @web/core/network/rpc either, and its jsonrpc has no env.
+
+    Calling it the 16 way posts to /[object Object] and Chatboo cannot open a session.
+    """
+    path = ROOT / 'stacks' / 'owl2' / 'pns_base' / 'static' / 'src' / 'js' / 'pns_web_paths.js'
+    text = path.read_text(encoding='utf-8')
+    assert 'jsonrpc(env, ++rpcId, url, params, settings)' in text
+    assert 'jsonrpc(url, params, settings)' in text

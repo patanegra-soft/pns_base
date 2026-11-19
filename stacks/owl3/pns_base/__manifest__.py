@@ -5,7 +5,7 @@
 
 {
     'name': 'PNS Base',
-    'version': '1.2.84',
+    'version': '1.2.92',
     'category': 'Technical',
     'summary': 'PNS ecosystem base layer: single-branch view compatibility and cross-version Odoo utilities (14.0 and later)',
     'description': """
@@ -50,7 +50,7 @@
         - List many2one that keeps the row in the breadcrumb (widget
           pns_row_link): opens this row's form, then the linked record.
         - Font Awesome icons on Odoo 20, which dropped its stylesheet
-          (static/src/css/pns_fa_compat.css): fa-* in screens and views
+          (static/src/lib/pns_fa_compat.css): fa-* in screens and views
           draw as in 14-19.
 
         Other pns_* modules declare it in 'depends' and reuse these pieces.
@@ -64,7 +64,8 @@
         'web.assets_backend': [
             'pns_base/static/src/js/pns_web_paths.js',
             'pns_base/static/src/js/pns_patch.js',
-            'pns_base/static/src/css/pns_fa_compat.css',
+            'pns_base/static/src/js/pns_field_registry.js',
+            'pns_base/static/src/lib/pns_fa_compat.css',
             'pns_base/static/src/js/pns_fa_compat.js',
             'pns_base/static/src/css/pns_required_readonly.css',
             'pns_base/static/src/css/pns_import_preview.css',

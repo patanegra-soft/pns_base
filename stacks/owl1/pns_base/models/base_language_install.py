@@ -5,6 +5,8 @@
 
 from odoo import _, models
 
+from ..utils.ui_feedback import client_notification
+
 
 class BaseLanguageInstall(models.TransientModel):
     _inherit = 'base.language.install'
@@ -16,16 +18,10 @@ class BaseLanguageInstall(models.TransientModel):
         dropped = getattr(type(Translation), '_pns_rows_dropped', 0) or 0
         if not dropped:
             return res
-        return {
-            'type': 'ir.actions.client',
-            'tag': 'display_notification',
-            'params': {
-                'title': _('Translations'),
-                'message': _(
-                    '%s duplicate translation rows were skipped so the language could load.'
-                ) % dropped,
-                'type': 'warning',
-                'sticky': True,
-                'next': res,
-            },
-        }
+        action = client_notification(
+            _('Translations'),
+            _('%s duplicate translation rows were skipped so the language could load.') % dropped,
+            'warning',
+        )
+        action['params']['next'] = res
+        return action

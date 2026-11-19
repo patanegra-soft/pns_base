@@ -3,9 +3,10 @@
  *
  * Three web modules that our code imports do not exist in Odoo 16:
  * @web/core/network/rpc, @web/core/user and @web/model/relational_model/record.
- * Where Odoo lacks one, it is defined here on top of what 16 has. Where Odoo
- * has it, nothing happens. Plain script, not @odoo-module: it must run while
- * the bundle registers modules, before anything imports them.
+ * Odoo 17.0 still lacks the first two. Where Odoo lacks one, it is defined
+ * here on top of what that version has. Where Odoo has it, nothing happens.
+ * Plain script, not @odoo-module: it must run while the bundle registers
+ * modules, before anything imports them.
  *
  * Odoo 17+ turns every static/src file into a module and lists each
  * require of a quoted name as a dependency, so the 16-only names stay in
@@ -30,8 +31,12 @@
         const { jsonrpc } = require(RPC_16);
         const env = { bus: new EventBus() };
         let rpcId = 0;
+        // 16: jsonrpc(env, rpcId, url, params, settings). 17.0: jsonrpc(url, params, settings).
+        const takesEnv = jsonrpc.length > 1;
         function rpc(url, params = {}, settings = {}) {
-            return jsonrpc(env, ++rpcId, url, params, settings);
+            return takesEnv
+                ? jsonrpc(env, ++rpcId, url, params, settings)
+                : jsonrpc(url, params, settings);
         }
         return { rpc };
     });

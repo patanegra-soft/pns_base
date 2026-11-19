@@ -2,6 +2,12 @@
 
 What changes for people who use this module, one section per published version, newest first. The heading is the git tag.
 
+## owl1-1.2.74_owl2-1.2.92_owl3-1.2.92 (2026-11-19)
+
+- Odoo 17.0: screens of other PNS modules reach the server again; the chat could not open a session.
+- Odoo 16: field widgets of other PNS modules load again ("C is not a constructor"), and the operation result dialog shows only the alerts that apply.
+- Spanish: the import review and operation result dialogs are translated in every version, Odoo 14 to 16 included. Odoo 16 now loads the Spanish catalogue.
+
 ## owl1-1.2.70_owl2-1.2.84_owl3-1.2.84 (2026-11-12)
 
 - Odoo 16: the progress dialog and the record link in lists load again; their screen templates were missing there.
